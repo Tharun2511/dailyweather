@@ -1,0 +1,44 @@
+export const response = {
+    "coord": {
+      "lon": 73.8553,
+      "lat": 18.5196
+    },
+    "weather": [
+      {
+        "id": 804,
+        "main": "Clouds",
+        "description": "overcast clouds",
+        "icon": "04n"
+      }
+    ],
+    "base": "stations",
+    "main": {
+      "temp": 296.76,
+      "feels_like": 295.91,
+      "temp_min": 296.76,
+      "temp_max": 296.76,
+      "pressure": 1017,
+      "humidity": 28,
+      "sea_level": 1017,
+      "grnd_level": 954
+    },
+    "visibility": 10000,
+    "wind": {
+      "speed": 2.7,
+      "deg": 288,
+      "gust": 3.29
+    },
+    "clouds": {
+      "all": 100
+    },
+    "dt": 1707845011,
+    "sys": {
+      "country": "IN",
+      "sunrise": 1707788034,
+      "sunset": 1707829434
+    },
+    "timezone": 19800,
+    "id": 1259229,
+    "name": "Pune",
+    "cod": 200
+  }
