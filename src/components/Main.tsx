@@ -3,31 +3,50 @@ import Image from "next/image";
 import React, { useState } from "react";
 import sun from "@/assets/sun.gif";
 import { ImLocation } from "react-icons/im";
+import { usePathname } from "next/navigation";
 
 const Main = () => {
     const [isCelcius, setIsCelcius] = useState(true);
+    const path = usePathname();
     return (
-        <div className="w-full h-[480px] md:mt-0 mt-5 p-4 bg-white flex flex-col gap-4 rounded-3xl shadow-lg shadow-gray-200/50">
+        <div
+            className={`${
+                path === "/" ? "w-full" : "w-[450px]"
+            } h-[480px] md:mt-0 mt-5 p-4 bg-white flex flex-col gap-4 rounded-3xl shadow-lg shadow-gray-200/50`}
+        >
             <div className="text-3xl font-medium p-2 flex justify-center border-b-2 border-gray-400">
                 Weather
             </div>
-            <div className="flex justify-around pt-2">
-                <div className="flex flex-col items-center pr-10">
+            <div className="w-full flex justify-around pt-2">
+                <div className="w-1/2 flex flex-col items-center pr-10">
                     <Image src={sun} alt="WeatherIcon" width={80} height={80} />
                     <div className="lg:text-2xl text-xl font-[Poppins] font-semibold text-gray-600 italic">
                         Clear Sky
                     </div>
                 </div>
-                <div className="flex flex-col items-start justify-center lg:text-xl text-lg pl-6 border-l-2 border-gray-400">
-                    <div>
-                        Latitude:{" "}
-                        <span className="font-semibold">73.8553&deg;</span>
+                {path === "/" ? (
+                    <div className="w-1/2 flex flex-col items-start justify-center lg:text-xl pl-2 text-lg border-l-2 border-gray-400">
+                        <div>
+                            Latitude:{" "}
+                            <span className="font-semibold">73.8553&deg;</span>
+                        </div>
+                        <div>
+                            Longitude:{" "}
+                            <span className="font-semibold">73.8553&deg;</span>
+                        </div>
                     </div>
-                    <div>
-                        Longitude:{" "}
-                        <span className="font-semibold">73.8553&deg;</span>
+                ) : (
+                    <div className="w-1/2 flex flex-col items-start justify-center lg:text-xl text-lg pl-6 border-l-2 border-gray-400">
+                        <div>
+                            Sunrises at:{" "}
+                            <span className="font-semibold">73.8553&deg;</span>
+                        </div>
+                        <div>
+                            sunsets at:{" "}
+                            <span className="font-semibold">73.8553&deg;</span>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
             <div className="flex flex-col items-center pt-2 gap-2">
                 <div className="text-5xl pt-2 font-semiboldold">
@@ -57,13 +76,17 @@ const Main = () => {
                     <ImLocation className="text-3xl" />
                     <div className="text-2xl">Pune (IN)</div>
                 </div>
-                <div className="w-full flex justify-around lg:pt-2 pt-0 lg:mt-2 mt-0 border-t-2 border-gray-400">
-                    <div className="lg:text-xl text-2xl border-r-2 border-gray-400 pr-8">
-                        Feels Like:{" "}
-                        <span className="font-semibold">200.8&deg; C</span>
+                <div className="w-full flex justify-around pt-2 mt-2 border-t-2 border-gray-400">
+                    <div className="w-1/2 lg:text-xl text-lg border-r-2 border-gray-400 flex justify-center">
+                        <div>
+                            Feels Like:{" "}
+                            <span className="font-semibold">200.8&deg; C</span>
+                        </div>
                     </div>
-                    <div className="lg:text-xl text-2xl">
-                        Humidity: <span className="font-semibold">90%</span>
+                    <div className="w-1/2 lg:text-xl text-lg pl-2 flex justify-center">
+                        <div>
+                            Humidity: <span className="font-semibold">90%</span>
+                        </div>
                     </div>
                 </div>
             </div>
