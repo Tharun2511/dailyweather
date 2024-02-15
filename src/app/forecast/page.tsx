@@ -9,9 +9,8 @@ import {
     AccordionItemPanel,
 } from "react-accessible-accordion";
 import { ImLocation } from "react-icons/im";
-import sun from "@/assets/sun.gif";
 
-const page = () => {
+const Forecast = () => {
     const [data, setData] = useState([
         "item1",
         "item2",
@@ -52,7 +51,9 @@ const page = () => {
                             <AccordionItemPanel>
                                 <div className="bg-gray-200 w-full h-[100px] rounded-2xl px-8 py-2 flex">
                                     <div className="w-1/3 flex justify-center items-center">
-                                        <div className="text-4xl font-semibold">20&deg; C</div>
+                                        <div className="text-4xl font-semibold">
+                                            20&deg; C
+                                        </div>
                                     </div>
                                     <div className="w-1/3 flex justify-center items-center">
                                         <Image
@@ -82,4 +83,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Forecast;
