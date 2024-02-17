@@ -1,54 +1,63 @@
 "use client";
 
+import { UserContext } from "@/context";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
 const Signup = () => {
-    const [user, setUser] = useState({
+    const { setUser, setFavourites } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
+    const [currentUser, setCurrentUser] = useState({
         name: "",
         email: "",
         password: "",
     });
-    const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
+        if (currentUser.name.length === 0) {
+            toast.error("Name field must not be empty");
+            return;
+        } else if (currentUser.name.length < 8) {
+            toast.error("Name must be at least 8 characters");
+            return;
+        } else if (currentUser.email.length === 0) {
+            toast.error("Email field must not be empty");
+            return;
+        } else if (currentUser.password.length === 0) {
+            toast.error("Password field must not be empty");
+            return;
+        } else if (currentUser.password.length < 8) {
+            toast.error("Password must be at least 8 characters");
+            return;
+        }
         try {
             setLoading(true);
-            const result = await axios.post("/api/signup", user);
-            toast.success("Sign in Successfull");
+            const result = await axios.post("/api/signup", currentUser);
+            toast.success("Sign up Successfull");
+            setUser({
+                name: currentUser.name,
+                email: currentUser.email,
+                favoutites: [],
+            });
+            setFavourites([]);
             router.push("/");
         } catch (error: any) {
-            toast.error(error.response.data.error);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        if (
-            user.name &&
-            user.name.length >= 8 &&
-            user.password &&
-            user.password.length >= 8
-        ) {
-            setButtonDisabled(false);
-        } else {
-            setButtonDisabled(true);
-        }
-    }, [user]);
-
     return (
         <div className="w-full h-full flex justify-center items-center mt-10">
-            <div className="lg:w-[450px] w-full h-[450px] px-8 bg-white flex flex-col items-center">
+            <div className="lg:w-[450px] w-full h-[450px] px-8 bg-white flex flex-col items-center shadow-lg shadow-gray-400">
                 <div className="text-4xl font-semibold md:py-10 py-6">
                     Sign Up
                 </div>
@@ -61,7 +70,10 @@ const Signup = () => {
                         placeholder="Enter your name"
                         type="text"
                         onChange={(e) => {
-                            setUser({ ...user, name: e.target.value });
+                            setCurrentUser({
+                                ...currentUser,
+                                name: e.target.value,
+                            });
                         }}
                         className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
                     />
@@ -70,7 +82,10 @@ const Signup = () => {
                         placeholder="Enter your email"
                         type="text"
                         onChange={(e) => {
-                            setUser({ ...user, email: e.target.value });
+                            setCurrentUser({
+                                ...currentUser,
+                                email: e.target.value,
+                            });
                         }}
                         className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
                     />
@@ -79,16 +94,15 @@ const Signup = () => {
                         placeholder="Enter a password"
                         type="password"
                         onChange={(e) => {
-                            setUser({ ...user, password: e.target.value });
+                            setCurrentUser({
+                                ...currentUser,
+                                password: e.target.value,
+                            });
                         }}
                         className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
                     />
                     <button
-                        className={`w-full h-14 mt-5 flex justify-center items-center text-2xl font-medium text-white rounded-xl ${
-                            buttonDisabled
-                                ? "bg-gray-400 pointer-events-none"
-                                : "bg-sky-400 cursor-pointer hover:bg-gradient-to-r hover:from-cyan-500 hover:via-purple-600 hover:to-sky-500 transition-all duration-300"
-                        }`}
+                        className="w-full h-14 mt-5 flex justify-center items-center text-2xl font-medium text-white rounded-xl bg-sky-400 cursor-pointer hover:bg-gradient-to-r hover:from-cyan-500 hover:via-purple-600 hover:to-sky-500 transition-all duration-300"
                         onClick={onSubmit}
                     >
                         {loading ? <ClipLoader color="white" /> : "SIGNUP"}

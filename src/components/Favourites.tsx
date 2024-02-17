@@ -1,19 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import { UserContext } from "@/context";
+import React, { useContext, useEffect, useState } from "react";
 import { FaLocationArrow } from "react-icons/fa";
 
 const Favourites = () => {
-    var fav: string[] = [];
-    useEffect(() => {
-        console.log("refreshed");
-    }, [fav]);
+    const { user, favourites } = useContext(UserContext);
+
+    useEffect(() => {}, [favourites]);
     return (
         <div className="bg-white w-full min-h-[250px] flex flex-col gap-2 px-4 pb-4 rounded-3xl shadow-lg shadow-gray-200/50">
             <div className="w-full h-16 text-2xl flex justify-center font-semibold py-4 border-b-2 border-gray-400">
-                Your Favourites
+                Your favourites
             </div>
-            {fav.length != 0 ? (
-                fav.map((loc) => (
+            {favourites.length != 0 ? (
+                user?.favourites?.map((loc: string) => (
                     <div
                         key={loc}
                         className="w-full text-lg font-semibold flex p-2 justify-between items-center border-b-[1px]"

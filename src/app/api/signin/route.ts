@@ -8,8 +8,7 @@ connect();
 
 export async function POST(request: NextRequest) {
     try {
-        const data = await request.json();
-        const { email, password } = data;
+        const { email, password } = await request.json();
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -31,9 +30,9 @@ export async function POST(request: NextRequest) {
         }
 
         const tokenData = {
-            id: user._id,
             name: user.name,
-            password: user.password,
+            email: user.email,
+            favourites: user.favourites
         };
 
         const token = jwt.sign(tokenData, process.env.JWT_SECRET!, {
@@ -41,8 +40,9 @@ export async function POST(request: NextRequest) {
         });
 
         const response = NextResponse.json({
-            message: "Login Successfull",
+            message: token,
             success: true,
+            data:tokenData
         });
 
         response.cookies.set("token", token, { httpOnly: true });
@@ -50,7 +50,6 @@ export async function POST(request: NextRequest) {
         return response;
         
     } catch (error: any) {
-        console.log(error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

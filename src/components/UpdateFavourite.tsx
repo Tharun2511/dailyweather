@@ -1,30 +1,36 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { UserContext } from "@/context";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import { TbStarFilled } from "react-icons/tb";
 
 const UpdateFavourite = () => {
-    const [favourites, setFavourites] = useState([
-        "Kaashi",
-        "Dwaraka",
-        "Ayodhya",
-        "Kedarnath",
-    ]);
-    const [isFavourite, setisFavourite] = useState(true);
-    const [location, setLocation] = useState("Dwarak");
-    useEffect(() => {
-        console.log("Changed");
-    }, [isFavourite]);
-    const changeFavourite = () => {
-        const index = favourites.indexOf(location);
+    const { user, setUser, location, favourites } = useContext(UserContext);
+    const [isFavourite, setisFavourite] = useState(false);
+    const currFavourites = [...favourites];
+
+    const changeFavourite = async () => {
+        const index = currFavourites.indexOf(location);
         if (index > -1) {
             setisFavourite(false);
-            favourites.splice(index, 1);
+            currFavourites.splice(index, 1);
         } else {
             setisFavourite(true);
-            favourites.push(location);
+            currFavourites.push(location);
         }
+        const result = await axios.post(
+            "/api/updatefavourites",
+            currFavourites
+        );
+        setUser({ ...user, favourites: currFavourites });
     };
+
+    useEffect(() => {
+        if (currFavourites.includes(location)) {
+            setisFavourite(true);
+        }
+    }, []);
 
     return (
         <div className="w-full h-auto bg-white py-4 px-4 rounded-xl text-xl font-semibold flex justify-between items-center">

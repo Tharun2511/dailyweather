@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "Please provide a password"],
         },
+        favourites:{
+            type: [String],
+            default:[]
+        }
     },
     {
         timestamps: true,

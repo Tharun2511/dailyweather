@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import { UserContextProvider } from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
             <body
                 className={`${inter.className} w-full h-full p-2 bg-gradient-to-r from-sky-500 to-cyan-300 md:overflow-hidden overflow-auto`}
             >
-                <NavBar />
-                {children}
-                <Toaster position="bottom-left"/>
+                <UserContextProvider>
+                    <NavBar />
+                    {children}
+                    <Toaster position="bottom-left" />
+                </UserContextProvider>
             </body>
         </html>
     );
