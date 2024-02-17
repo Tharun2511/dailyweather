@@ -17,7 +17,7 @@ const middleware = async(request: NextRequest) => {
 };
 
 export const config = {
-    matcher: ["/", "/login", "/signup", "/forecast","/currentlocation"],
+    matcher: ["/", "/login", "/signup", "/forecast"],
 };
 
 export default middleware;

@@ -1,12 +1,28 @@
-import HomeLayout from '@/components/HomeLayout'
-import React from 'react'
+"use client";
+import HomeLayout from "@/components/HomeLayout";
+import { UserContext } from "@/context";
+import { setUserAndCurrentLocation } from "@/helpers/helpers";
+import { useRouter } from "next/navigation";
+import React, { useContext } from "react";
 
-const page = () => {
-  return (
-    <div>
-      <HomeLayout />
-    </div>
-  )
-}
+const Home = () => {
+    const { user, setUser, setFavourites, setWeather, setLocation } =
+        useContext(UserContext);
 
-export default page
+    const router = useRouter();
+
+    if (!user) {
+        setUserAndCurrentLocation(
+            user,
+            setUser,
+            setFavourites,
+            setWeather,
+            setLocation,
+            router
+        );
+    }
+
+    return <HomeLayout />;
+};
+
+export default Home;

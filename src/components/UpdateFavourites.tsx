@@ -1,36 +1,34 @@
 "use client";
 import { UserContext } from "@/context";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import { TbStarFilled } from "react-icons/tb";
 
-const UpdateFavourite = () => {
-    const { user, setUser, location, favourites } = useContext(UserContext);
-    const [isFavourite, setisFavourite] = useState(false);
-    const currFavourites = [...favourites];
+const UpdateFavourites = () => {
+    const { user, setUser, favourites, setFavourites, location } = useContext(UserContext);
 
+    const [isFavourite, setisFavourite] = useState(
+        favourites.includes(location)
+    );
     const changeFavourite = async () => {
-        const index = currFavourites.indexOf(location);
-        if (index > -1) {
+        if (isFavourite) {
+            const index = favourites.indexOf(location);
             setisFavourite(false);
-            currFavourites.splice(index, 1);
+            favourites.splice(index, 1);
         } else {
             setisFavourite(true);
-            currFavourites.push(location);
+            favourites.push(location);
         }
-        const result = await axios.post(
-            "/api/updatefavourites",
-            currFavourites
-        );
-        setUser({ ...user, favourites: currFavourites });
-    };
 
-    useEffect(() => {
-        if (currFavourites.includes(location)) {
-            setisFavourite(true);
-        }
-    }, []);
+        const result  = await axios.post("/api/updatefavourites", {
+            email: user?.email,
+            favourites
+        });
+        setFavourites(favourites);
+        setUser({ ...user, favourites: favourites });
+    };
 
     return (
         <div className="w-full h-auto bg-white py-4 px-4 rounded-xl text-xl font-semibold flex justify-between items-center">
@@ -48,4 +46,4 @@ const UpdateFavourite = () => {
     );
 };
 
-export default UpdateFavourite;
+export default UpdateFavourites;

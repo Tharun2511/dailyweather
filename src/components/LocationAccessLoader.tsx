@@ -2,7 +2,7 @@
 import React from "react";
 import { Radio } from "react-loader-spinner";
 
-const CurrentLocationAccess = () => {
+const LocationAccessLoader = () => {
     return (
         <div className="flex justify-center items-center">
             <div className="w-auto md:min-w-[700px] sm:min-w-[400px] max-w-[700px] h-[450px] bg-white m-10 flex flex-col justify-center items-center rounded-2xl">
@@ -26,4 +26,4 @@ const CurrentLocationAccess = () => {
     );
 };
 
-export default CurrentLocationAccess;
+export default LocationAccessLoader;

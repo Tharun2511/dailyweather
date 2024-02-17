@@ -5,11 +5,12 @@ connect();
 
 export async function POST(request: NextRequest) {
     try {
-        const { email, currFavourites } = await request.json();
+        const { email, favourites } = await request.json();
         
         const result = await User.findOneAndUpdate({ email }, {
-            $set: { favourites: currFavourites },
-         }, { new: true });
+            $set: { favourites: favourites },
+        }, { new: true });
+        console.log(result);
         return NextResponse.json({ message: "Update success", result });
     } catch (error:any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

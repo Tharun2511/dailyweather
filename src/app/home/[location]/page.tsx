@@ -1,18 +1,18 @@
 "use client";
-import HomeLayout from '@/components/HomeLayout';
-import Loader from '@/components/Loader';
-import { UserContext } from '@/context';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import React, { useContext, useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
+import HomeLayout from "@/components/HomeLayout";
+import Loader from "@/components/Loader";
+import { UserContext } from "@/context";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const SearchLocation = ({params}:any) => {
-    const searchedLocation = params.location;
+const SearchLocation = ({ params }: any) => {
+    const[searchedLocation, setSearchedLocation] = useState<string>(params.location);
     const { setLocation, setWeather } = useContext(UserContext);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    
+
     const getWeather = async () => {
         try {
             const { data } = await axios.get(
@@ -24,17 +24,15 @@ const SearchLocation = ({params}:any) => {
             toast.success("Weather fetched successfully");
         } catch (error) {
             toast.error("Failed to fetch data or Invalid Location");
-            router.push('/home');
+            router.push("/home");
         } finally {
             setLoading(false);
         }
-    }
+    };
     useEffect(() => {
         getWeather();
     }, [searchedLocation]);
-    return (
-        loading?<Loader />:<HomeLayout /> 
-    );
-}
+    return <HomeLayout />;
+};
 
-export default SearchLocation
+export default SearchLocation;

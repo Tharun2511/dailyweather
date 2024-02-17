@@ -1,6 +1,6 @@
 "use client";
 import { UserContext } from "@/context";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaLocationArrow } from "react-icons/fa";
 
 const Favourites = () => {

@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
 const Login = () => {
-    const { user, setUser, setFavourites } = useContext(UserContext);
+    const { user, setUser, favourites, setFavourites } =
+        useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const Router = useRouter();
     const [currentUser, setCurrentUser] = useState({
@@ -39,7 +40,6 @@ const Login = () => {
                 email: data.data.email,
                 favourites: data.data.favourites || [],
             });
-            console.log(user);
             setFavourites(data.favourites || []);
             toast.success("Sign in Successfull");
             Router.push("/");

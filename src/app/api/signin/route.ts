@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
         const tokenData = {
             name: user.name,
             email: user.email,
-            favourites: user.favourites
+            favourites: user.favourites,
         };
 
         const token = jwt.sign(tokenData, process.env.JWT_SECRET!, {
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         const response = NextResponse.json({
             message: token,
             success: true,
-            data:tokenData
+            data: tokenData,
         });
 
         response.cookies.set("token", token, { httpOnly: true });
