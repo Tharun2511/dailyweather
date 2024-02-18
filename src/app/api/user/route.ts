@@ -10,4 +10,4 @@ export async function GET(request: NextRequest) {
     } else {
         return NextResponse.json({ error: "Token not found or invalid token" }, { status: 400 });
     }
-}
+} 

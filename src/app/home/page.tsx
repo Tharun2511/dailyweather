@@ -1,26 +1,18 @@
 "use client";
 import HomeLayout from "@/components/HomeLayout";
 import { UserContext } from "@/context";
-import { setUserAndCurrentLocation } from "@/helpers/helpers";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const Home = () => {
-    const { user, setUser, setFavourites, setWeather, setLocation } =
-        useContext(UserContext);
-
     const router = useRouter();
+    const { user } = useContext(UserContext);
 
-    if (!user) {
-        setUserAndCurrentLocation(
-            user,
-            setUser,
-            setFavourites,
-            setWeather,
-            setLocation,
-            router
-        );
-    }
+    useEffect(() => {
+        if (!user) {
+            router.push("/");
+        }
+    }, [user]);
 
     return <HomeLayout />;
 };

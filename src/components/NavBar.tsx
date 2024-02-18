@@ -5,11 +5,13 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { UserContext } from "@/context";
 import { useRouter } from "next/navigation";
+import { goToLocation } from "@/helpers/helpers";
 
 const NavBar = () => {
-    const { user } = useContext(UserContext);
+    const { user, location } = useContext(UserContext);
     const [searchLocation, setSearchLocation] = useState("");
     const router = useRouter();
+
     return (
         <div
             className={`w-full md:h-14 ${
@@ -37,16 +39,16 @@ const NavBar = () => {
                     placeholder="Search place, city or country..."
                     className="text-lg text-gray-600 p-1 focus:outline-none md:w-[300px] w-full"
                     onChange={(e) => {
-                        setSearchLocation(e.target.value);
+                        setSearchLocation(e.target.value.toLowerCase());
                     }}
                     value={searchLocation}
-            
                 />
-                <IoSearch className="text-2xl text-gray-400 cursor-pointer" onClick={() => {
-                    router.push(`/home/${searchLocation}
-                    `);
-                    setSearchLocation("");
-                }}/>
+                <IoSearch
+                    className="text-2xl text-gray-400 cursor-pointer"
+                    onClick={() => {
+                        goToLocation(searchLocation, setSearchLocation, router, location);
+                    }}
+                />
             </div>
             <div className="md:pr-2 pr-5">
                 <div className="flex gap-2 items-center justify-center">

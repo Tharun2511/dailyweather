@@ -1,9 +1,12 @@
-
 import axios from "axios";
 import { NextResponse } from "next/server";
 import toast from "react-hot-toast";
 
-export const setUserDetails = async (setUser:any, setFavourites:any, router:any) => {
+export const setUserDetails = async (
+    setUser: any,
+    setFavourites: any,
+    router: any
+) => {
     try {
         const { data } = await axios.get("/api/user");
         setUser({
@@ -17,11 +20,17 @@ export const setUserDetails = async (setUser:any, setFavourites:any, router:any)
     }
 };
 
-export const setUserAndCurrentLocation = async (user:any, setUser:any, setFavourites:any, setWeather:any, setLocation:any,router:any) => {;
+export const setUserAndCurrentLocation = async (
+    user: any,
+    setUser: any,
+    setFavourites: any,
+    router: any,
+    setWeather: any,
+    setLocation: any,
+) => {
     if (!user) {
-        setUserDetails(setUser, setFavourites,router);
+        setUserDetails(setUser, setFavourites, router);
     }
-    console.log("getlocation calling");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async ({ coords }) => {
             const { data } = await axios.get(
@@ -37,7 +46,25 @@ export const setUserAndCurrentLocation = async (user:any, setUser:any, setFavour
     }
 };
 
-export const gethWeatherByCity = (city: string) => {};
+export const gethWeatherByCity = async (
+    city: string,
+    setWeather: any,
+    setLocation: any,
+    router: any
+) => {
+    try {
+        const { data } = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
+        );
+
+        setWeather(data);
+        setLocation(data.name);
+        toast.success("Weather fetched successfully");
+    } catch (error) {
+        toast.error("Invalid Location or Failed to fetch location data");
+        router.push("/home");
+    }
+};
 
 export const gethWeatherByCoord = async (lat: number, lon: number) => {
     try {
@@ -52,7 +79,82 @@ export const gethWeatherByCoord = async (lat: number, lon: number) => {
     }
 };
 
-export const getForecast = (city: string) => {};
+export const getForecast = async (
+    setForecast: any,
+    location: string,
+    setCountry: any,
+    setLoading: any,
+    router: any
+) => {
+    try {
+        var { data } = await axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
+        );
+        setForecast(data.list);
+        setCountry(data.city.country);
+    } catch (error) {
+        toast.error("Something went wrong");
+        router.push("/home");
+    } finally {
+        setLoading(false);
+    }
+};
+
+export const changeFavourite = async (
+    setLoading: any,
+    setisFavourite: any,
+    favourites: any,
+    setFavourites: any,
+    setUser: any,
+    user: any,
+    location: any,
+    isFavourite: any
+) => {
+    setLoading(true);
+    if (favourites.length === 4) {
+        toast.error("You can't add more than 4 favourites");
+        setLoading(false);
+        return;
+    }
+
+    isFavourite
+        ? favourites.splice(favourites.indexOf(location), 1)
+        : favourites.push(location);
+
+    try {
+        const result = await axios.post("/api/updatefavourites", {
+            email: user?.email,
+            favourites,
+        });
+        setUser({ ...user, favourites: favourites });
+        setFavourites(favourites);
+        setisFavourite(!isFavourite);
+        toast.success(
+            `${
+                isFavourite ? "Removed from favourites" : "Addded to favourites"
+            }`
+        );
+    } catch (error) {
+        toast.error("Failed to set location as favourite");
+    } finally {
+        setLoading(false);
+    }
+};
+
+export const goToLocation = (
+    searchLocation: string,
+    setSearchLocation: any,
+    router: any,
+    location: string,
+) => {
+    if (
+        location ===
+        searchLocation.charAt(0).toUpperCase() + searchLocation.slice(1)
+    )
+        return;
+    else router.push(`/home/${searchLocation}`);
+    setSearchLocation("");
+};
 
 export const toCelcius = (temp: number) => {
     return Math.round((temp - 273.15) * 100) / 100;

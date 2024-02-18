@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
-import sun from "@/assets/sun.gif";
 import { ImLocation } from "react-icons/im";
 import { usePathname } from "next/navigation";
 import { UserContext } from "@/context";
@@ -76,13 +75,13 @@ const Main = () => {
                         Fahrenheit
                     </div>
                 </div>
-                <div className="flex pt-5 items-center gap-5">
+                <div className="flex lg:pt-5 pt-2 items-center gap-5">
                     <ImLocation className="text-3xl" />
                     <div className="text-2xl">{`${weather?.name || "Delhi"}, ${
                         weather?.sys.country || "IN"
                     }`}</div>
                 </div>
-                <div className="w-full flex justify-around pt-2 mt-2 border-t-2 border-gray-400">
+                <div className="w-full flex justify-around lg:pt-2 pt-0 mt-2 border-t-2 border-gray-400">
                     <div className="w-1/2 lg:text-xl text-lg border-r-2 border-gray-400 flex justify-center">
                         <div>
                             Feels Like: <br />

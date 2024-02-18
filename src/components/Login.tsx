@@ -5,12 +5,12 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
 const Login = () => {
-    const { user, setUser, favourites, setFavourites } =
+    const { setUser, setFavourites } =
         useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const Router = useRouter();
@@ -34,13 +34,12 @@ const Login = () => {
         try {
             setLoading(true);
             const { data } = await axios.post("/api/signin", currentUser);
-            console.log(data.data);
             setUser({
                 name: data.data.name,
                 email: data.data.email,
                 favourites: data.data.favourites || [],
             });
-            setFavourites(data.favourites || []);
+            setFavourites(data.data.favourites || []);
             toast.success("Sign in Successfull");
             Router.push("/");
         } catch (error: any) {

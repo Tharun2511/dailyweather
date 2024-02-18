@@ -1,9 +1,7 @@
 "use client";
 import { UserContext } from "@/context";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import {
     Accordion,
     AccordionItem,
@@ -13,36 +11,24 @@ import {
 } from "react-accessible-accordion";
 import { ImLocation } from "react-icons/im";
 import Image from "next/image";
-import { toCelcius } from "@/helpers/helpers";
+import { getForecast, toCelcius } from "@/helpers/helpers";
 import Loader from "@/components/Loader";
 
 const Forecast = () => {
-    const [loading, setLoading] = useState(true);
-    const { location } = useContext(UserContext);
-    const [isOpen, setIsOpen] = useState(false);
-    const Router = useRouter();
-    const [forecast, setForecast] = useState([]);
-    const [country, setCountry] = useState("");
-    const timeIndex = [4, 12, 20, 28, 36];
-
-    const getForecast = async () => {
-        try {
-            var { data } = await axios.get(
-                `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
-            );
-            setForecast(data.list);
-            setCountry(data.city.country);
-            setLoading(false)
-        } catch (error) {
-            toast.error("Something went wrong");
-            Router.push("/home");
-        }
-    };
+    const [loading, setLoading] = useState<boolean>(true);
+    const { user, location } = useContext(UserContext);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const router = useRouter();
+    const [forecast, setForecast] = useState<any[]>([]);
+    const [country, setCountry] = useState<string>("");
 
     useEffect(() => {
-        getForecast();
+        if (!user) {
+            router.push("/");
+        }
+        getForecast(setForecast, location, setCountry, setLoading, router);
     }, []);
-    
+
     return loading ? (
         <Loader />
     ) : (
@@ -57,7 +43,7 @@ const Forecast = () => {
                 <Accordion allowZeroExpanded>
                     {forecast?.map(
                         (item: any, index: number) =>
-                            timeIndex.includes(index) && (
+                            item?.dt_txt.split(" ")[1] === "12:00:00" && (
                                 <AccordionItem key={index}>
                                     <AccordionItemHeading
                                         onClick={() => {
@@ -72,7 +58,7 @@ const Forecast = () => {
                                                 <div className="text-xl font-medium">
                                                     {item?.dt_txt.split(
                                                         " "
-                                                    )[1] + " PM"}
+                                                    )[1]}
                                                 </div>
                                             </div>
                                         </AccordionItemButton>

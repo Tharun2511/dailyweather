@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
         const result = await User.findOneAndUpdate({ email }, {
             $set: { favourites: favourites },
         }, { new: true });
-        console.log(result);
         return NextResponse.json({ message: "Update success", result });
     } catch (error:any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

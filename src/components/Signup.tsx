@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 
@@ -26,6 +26,9 @@ const Signup = () => {
             return;
         } else if (currentUser.name.length < 8) {
             toast.error("Name must be at least 8 characters");
+            return;
+        } else if (currentUser.name.length > 12) {
+            toast.error("Name must not be greater than 12 characters");
             return;
         } else if (currentUser.email.length === 0) {
             toast.error("Email field must not be empty");
