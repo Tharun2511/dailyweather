@@ -26,7 +26,7 @@ export const setUserAndCurrentLocation = async (
     setFavourites: any,
     router: any,
     setWeather: any,
-    setLocation: any,
+    setLocation: any
 ) => {
     if (!user) {
         setUserDetails(setUser, setFavourites, router);
@@ -56,7 +56,7 @@ export const gethWeatherByCity = async (
         const { data } = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
         );
-
+        console.log(data);
         setWeather(data);
         setLocation(data.name);
         toast.success("Weather fetched successfully");
@@ -111,10 +111,13 @@ export const changeFavourite = async (
     isFavourite: any
 ) => {
     setLoading(true);
-    if (favourites.length === 4) {
-        toast.error("You can't add more than 4 favourites");
-        setLoading(false);
-        return;
+
+    if (!isFavourite) {
+        if (favourites.length === 4) {
+            toast.error("You can't add more than 4 favourites");
+            setLoading(false);
+            return;
+        }
     }
 
     isFavourite
@@ -145,7 +148,7 @@ export const goToLocation = (
     searchLocation: string,
     setSearchLocation: any,
     router: any,
-    location: string,
+    location: string
 ) => {
     if (
         location ===

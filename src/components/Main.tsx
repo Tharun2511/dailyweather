@@ -2,30 +2,27 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import { ImLocation } from "react-icons/im";
-import { usePathname } from "next/navigation";
 import { UserContext } from "@/context";
 import { toCelcius, toFahrenheit } from "@/helpers/helpers";
+import { IconMap } from "@/assets/IconImports";
 
 const Main = () => {
     const { weather } = useContext(UserContext);
-    const [isCelcius, setIsCelcius] = useState(true);
-    const path = usePathname();
+    const [isCelcius, setIsCelcius] = useState<boolean>(true);
     return (
         <div
             className={`lg:w-[450px] md:w-[400px] h-[480px] md:mt-0 mt-5 p-4 bg-white flex flex-col gap-4 rounded-3xl shadow-lg shadow-gray-200/50`}
         >
-            <div className="text-3xl font-medium p-2 flex justify-center border-b-2 border-gray-400">
+            <div className="text-3xl font-medium pb-1 flex justify-center border-b-2 border-gray-400">
                 Weather
             </div>
-            <div className="w-full flex justify-around pt-2">
-                <div className="w-1/2 flex flex-col items-center pr-10">
+            <div className="w-full flex justify-around">
+                <div className="w-1/2 flex flex-col items-center justify-center pr-10">
                     <Image
-                        src={`https://openweathermap.org/img/wn/${
-                            weather?.weather[0].icon || "10d"
-                        }@2x.png`}
+                        src={IconMap.get(`${weather?.weather[0].icon}`)}
                         alt="WeatherIcon"
-                        width={80}
-                        height={80}
+                        width={100}
+                        height={100}
                     />
                     <div className="lg:text-2xl text-xl font-[Poppins] font-semibold text-gray-600 italic">
                         {weather?.weather[0].description || "Clear sky"}

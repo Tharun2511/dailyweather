@@ -13,6 +13,7 @@ import { ImLocation } from "react-icons/im";
 import Image from "next/image";
 import { getForecast, toCelcius } from "@/helpers/helpers";
 import Loader from "@/components/Loader";
+import { IconMap } from "@/assets/IconImports";
 
 const Forecast = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -56,9 +57,7 @@ const Forecast = () => {
                                                     {item?.dt_txt.split(" ")[0]}
                                                 </div>
                                                 <div className="text-xl font-medium">
-                                                    {item?.dt_txt.split(
-                                                        " "
-                                                    )[1]}
+                                                    {item?.dt_txt.split(" ")[1]}
                                                 </div>
                                             </div>
                                         </AccordionItemButton>
@@ -74,9 +73,11 @@ const Forecast = () => {
                                             </div>
                                             <div className="w-1/3 flex justify-center items-center">
                                                 <Image
-                                                    src={`https://openweathermap.org/img/wn/${item.weather[0]?.icon}@2x.png`}
+                                                    src={IconMap.get(
+                                                        `${item.weather[0]?.icon}`
+                                                    )}
                                                     alt="icon"
-                                                    width={120}
+                                                    width={100}
                                                     height={100}
                                                 />
                                             </div>

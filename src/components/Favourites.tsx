@@ -21,7 +21,7 @@ const Favourites = () => {
                     >
                         {loc}
                         <div
-                            className={`w-fit h-7 rounded-md  border-[1px] py-4 px-4 flex justify-center items-center cursor-pointer hover:bg-sky-400 hover:text-white transition-all duration-500 ${
+                            className={`w-fit h-7 rounded-md border-[1px] py-4 px-4 flex justify-center items-center gap-2 cursor-pointer hover:bg-sky-400 hover:text-white transition-all duration-500 ${
                                 loc !== location
                                     ? "text-sky-400 border-sky-400"
                                     : "text-white bg-gray-400 pointer-events-none"
@@ -30,8 +30,10 @@ const Favourites = () => {
                                 router.push(`/home/${loc}`);
                             }}
                         >
-                            Let&apos;s visit
-                            <FaLocationArrow className="text-2xl pl-2" />
+                            <div className="lg:block md:hidden block text-base">
+                                Let&apos;s visit
+                            </div>
+                            <FaLocationArrow className="text-sm" />
                         </div>
                     </div>
                 ))
