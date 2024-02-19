@@ -154,7 +154,8 @@ const Signup = () => {
             </div>
             <div className="w-[450px] h-[450px] relative md:block hidden">
                 <Image
-                    src="https://source.unsplash.com/random?climate&wallpapers"
+                    src="https://source.unsplash.com/random?sky,forest"
+                    // weather&forest
                     alt="Login Cover"
                     fill
                 />
