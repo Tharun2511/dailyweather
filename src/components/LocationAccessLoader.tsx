@@ -13,6 +13,7 @@ const LocationAccessLoader = () => {
                     ariaLabel="radio-loading"
                     wrapperStyle={{}}
                     wrapperClass=""
+                    colors={["#38bdf8", "#38bdf8", "#38bdf8"]}
                 />
                 <div className="text-2xl font-semibold px-4 pb-4 text-center">
                     Detecting your location

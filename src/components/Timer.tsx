@@ -1,4 +1,5 @@
 "use client";
+import { dateBuilder } from "@/helpers/helpers";
 import React, { useEffect, useState } from "react";
 
 const Timer = () => {
@@ -9,9 +10,8 @@ const Timer = () => {
         setInterval(() => {
             let currDateTime = new Date();
             let currTime = currDateTime.toLocaleTimeString();
-            let currDate = currDateTime.toDateString();
             setTime(currTime);
-            setDate(currDate);
+            setDate(dateBuilder(currDateTime));
         }, 1000);
     }, []);
 
@@ -19,7 +19,7 @@ const Timer = () => {
         <div className="bg-white w-full h-auto flex justify-center min-w-72 rounded-3xl shadow-lg shadow-gray-200/50">
             <div className="p-4 flex flex-col gap-2">
                 <div className="text-4xl">{time}</div>
-                <div className="text-xl">{date}</div>
+                <div className="text-lg">{date}</div>
             </div>
         </div>
     );

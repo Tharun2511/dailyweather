@@ -10,7 +10,7 @@ const Loader = () => {
                     visible={true}
                     height="80"
                     width="80"
-                    color="#4fa94d"
+                    color="#38bdf8"
                     ariaLabel="revolving-dot-loading"
                     wrapperStyle={{}}
                     wrapperClass=""
