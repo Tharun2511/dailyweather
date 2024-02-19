@@ -52,7 +52,7 @@ const Forecast = () => {
                                         }}
                                     >
                                         <AccordionItemButton>
-                                            <div className="lg:w-[700px] md:w-[600px] min-w-[330px] h-12 bg-white flex justify-around items-center mt-5 px-5 py-3 rounded-xl">
+                                            <div className="lg:w-[700px] md:w-[600px] min-w-[330px] h-12 bg-white flex justify-around items-center mt-5 px-3 py-3 rounded-xl">
                                                 <div className="text-xl font-medium">
                                                     {item?.dt_txt.split(" ")[0]}
                                                 </div>

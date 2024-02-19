@@ -38,7 +38,7 @@ const UpdateFavourites = () => {
                 }
             >
                 {loading ? (
-                    <ClipLoader color="blue" size={20} />
+                    <ClipLoader color="gold" size={20} />
                 ) : isFavourite ? (
                     <TbStarFilled className="text-3xl text-yellow-400 cursor-pointer" />
                 ) : (

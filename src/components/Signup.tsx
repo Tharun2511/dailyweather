@@ -8,8 +8,12 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { IoIosEye, IoIosEyeOff, IoMdPerson } from "react-icons/io";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { MdEmail } from "react-icons/md";
 
 const Signup = () => {
+    const router = useRouter();
     const { setUser, setFavourites } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState({
@@ -17,7 +21,7 @@ const Signup = () => {
         email: "",
         password: "",
     });
-    const router = useRouter();
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
@@ -61,57 +65,84 @@ const Signup = () => {
     return (
         <div className="w-full h-full flex justify-center items-center mt-10">
             <div className="lg:w-[450px] w-full h-[450px] px-8 bg-white flex flex-col items-center shadow-lg shadow-gray-400">
-                <div className="text-4xl font-semibold md:py-10 py-6">
+                <div className="text-4xl text-sky-600 font-semibold py-6">
                     Sign Up
                 </div>
                 <form
                     className="w-full flex flex-col justify-cente gap-5 md:rounded-none rounded-xl"
                     onSubmit={onSubmit}
                 >
-                    <input
-                        name="name"
-                        placeholder="Enter your name"
-                        type="text"
-                        onChange={(e) => {
-                            setCurrentUser({
-                                ...currentUser,
-                                name: e.target.value,
-                            });
-                        }}
-                        className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
-                    />
-                    <input
-                        name="email"
-                        placeholder="Enter your email"
-                        type="text"
-                        onChange={(e) => {
-                            setCurrentUser({
-                                ...currentUser,
-                                email: e.target.value,
-                            });
-                        }}
-                        className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
-                    />
-                    <input
-                        name="password"
-                        placeholder="Enter a password"
-                        type="password"
-                        onChange={(e) => {
-                            setCurrentUser({
-                                ...currentUser,
-                                password: e.target.value,
-                            });
-                        }}
-                        className="w-full h-[40px] text-lg focus:outline-none border-b-2 border-gray-400 focus:border-sky-400 focus:text-sky-400 focus:placeholder:text-sky-400 focus:text-xl shadow-lg shadow-gray-200/40 focus:shadow-sky-200/20 transition-all duration-500"
-                    />
+                    <div className="relative">
+                        <input
+                            name="name"
+                            placeholder="Enter your name"
+                            type="text"
+                            onChange={(e) => {
+                                setCurrentUser({
+                                    ...currentUser,
+                                    name: e.target.value,
+                                });
+                            }}
+                            autoComplete="off"
+                            className="w-full h-[60px] pl-12 bg-gray-200 text-base text-gray-700 font-medium rounded-md focus:outline-none"
+                        />
+                        <IoMdPerson className="absolute left-0 top-[20px] text-xl text-gray-400 ml-4" />
+                    </div>
+                    <div className="relative">
+                        <input
+                            name="email"
+                            placeholder="Enter your email"
+                            type="text"
+                            onChange={(e) => {
+                                setCurrentUser({
+                                    ...currentUser,
+                                    email: e.target.value,
+                                });
+                            }}
+                            autoComplete="off"
+                            className="w-full h-[60px] pl-12 bg-gray-200 text-base text-gray-700 font-medium rounded-md focus:outline-none"
+                        />
+                        <MdEmail className="absolute left-0 top-[20px] text-xl text-gray-400 ml-4" />
+                    </div>
+                    <div className="relative">
+                        <input
+                            name="password"
+                            placeholder="Enter a password"
+                            type={`${showPassword ? "text" : "password"}`}
+                            onChange={(e) => {
+                                setCurrentUser({
+                                    ...currentUser,
+                                    password: e.target.value,
+                                });
+                            }}
+                            className="w-full h-[60px] pl-12 bg-gray-200 text-base text-gray-700 font-medium rounded-md focus:outline-none"
+                        />
+                        <RiLockPasswordFill className="absolute left-0 top-[20px] text-xl text-gray-400 ml-4" />
+                        <IoIosEye
+                            className={`absolute right-0 top-5 text-2xl text-gray-400 mr-4 ${
+                                showPassword && "hidden"
+                            } cursor-pointer`}
+                            onClick={() => {
+                                setShowPassword(!showPassword);
+                            }}
+                        />
+                        <IoIosEyeOff
+                            className={`absolute right-0 top-5 text-2xl text-gray-400 mr-4 ${
+                                !showPassword && "hidden"
+                            } cursor-pointer`}
+                            onClick={() => {
+                                setShowPassword(!showPassword);
+                            }}
+                        />
+                    </div>
                     <button
-                        className="w-full h-14 mt-5 flex justify-center items-center text-2xl font-medium text-white rounded-xl bg-sky-400 cursor-pointer hover:bg-gradient-to-r hover:from-cyan-500 hover:via-purple-600 hover:to-sky-500 transition-all duration-300"
+                        className="w-full h-14 flex justify-center items-center text-2xl font-medium text-white rounded-xl bg-sky-400 cursor-pointer hover:bg-gradient-to-r hover:from-cyan-500 hover:via-purple-600 hover:to-sky-500 transition-all duration-300"
                         onClick={onSubmit}
                     >
-                        {loading ? <ClipLoader color="white" /> : "SIGNUP"}
+                        {loading ? <ClipLoader color="white" /> : "SIGN UP"}
                     </button>
                 </form>
-                <div className="w-full py-5 flex justify-around items-center md:text-lg text-base">
+                <div className="w-full py-3 flex justify-around items-center md:text-lg text-base">
                     <div>Already have an account?</div>
                     <Link
                         href={"/login"}
@@ -123,7 +154,7 @@ const Signup = () => {
             </div>
             <div className="w-[450px] h-[450px] relative md:block hidden">
                 <Image
-                    src="https://source.unsplash.com/random?sky"
+                    src="https://source.unsplash.com/random?climate&wallpapers"
                     alt="Login Cover"
                     fill
                 />

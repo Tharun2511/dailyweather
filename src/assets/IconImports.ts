@@ -17,7 +17,7 @@ import Icon13n from "./weather-icons-master/Icon13n.svg";
 import Icon50d from "./weather-icons-master/Icon50d.svg";
 import Icon50n from "./weather-icons-master/Icon50n.svg";
 
-export const IconMap = new Map<any, any>();
+export const IconMap = new Map<string, any>();
 IconMap.set("01d", Icon01d);
 IconMap.set("01n", Icon01n);
 IconMap.set("02d", Icon02d);

@@ -56,7 +56,6 @@ export const gethWeatherByCity = async (
         const { data } = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
         );
-        console.log(data);
         setWeather(data);
         setLocation(data.name);
         toast.success("Weather fetched successfully");
@@ -71,7 +70,6 @@ export const gethWeatherByCoord = async (lat: number, lon: number) => {
         const data = await axios.get(
             `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=98fa4b6ab5647ebf9cdd6c9ea65ab1bc`
         );
-        console.log(data);
         return NextResponse.json({ message: "succes", data: data });
     } catch (error: any) {
         toast.error("Fetching weather of the current location failed");
@@ -162,6 +160,7 @@ export const goToLocation = (
 export const toCelcius = (temp: number) => {
     return Math.round((temp - 273.15) * 100) / 100;
 };
+
 export const toFahrenheit = (temp: number) => {
     return Math.round((((temp - 273.15) * 9) / 5 + 32) * 100) / 100;
 };
