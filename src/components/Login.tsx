@@ -56,7 +56,7 @@ const Login = () => {
         <div className="w-full h-full flex justify-center items-center mt-10">
             <div className="w-[450px] h-[450px] relative md:block hidden">
                 <Image
-                    src="https://source.unsplash.com/random?mountains&sky"
+                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&q=75"
                     alt="Login Cover"
                     fill
                 />
